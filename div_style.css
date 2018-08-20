@@ -19,10 +19,6 @@ body {
     font-size: 22pt;
 }
 
-#product_description {
-    text-align: left;
-}
-
 .prod_name,
 .prod_cost,
 .prod_count {
@@ -77,6 +73,7 @@ body {
 
 #prod_description {
     text-align: left;
-    font-size: 18px;
+    font-size: 16px;
     border: 1px solid black;
+    padding: 5px;
 }
