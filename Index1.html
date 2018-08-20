@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <link href="div_style.css" rel="stylesheet">
+</head>
+
+<body>
+    <script>
+        function ready() {
+            //init db context and save it
+            //loadProdRecords();
+
+            //добавление тестовой записи о продукте
+            addProd();
+
+            buttonCart = document.getElementById("submit_button");
+            buttonCart.onclick = submitClick;
+        }
+
+        document.addEventListener("DOMContentLoaded", ready);
+    </script>
+
+    <div id="container">
+        <div id="storage">
+            Склад
+            <div id="product_table">
+
+            </div>
+        </div>
+        <div id="cart_place">
+            Корзина
+            <div id="cart_table">
+
+            </div>
+            <div id="submit_button">
+                Рассчитать сумму
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <script src="db_script.js"></script>
+    <script src="cart_logic.js"></script>
+</body>
+
+</html>
