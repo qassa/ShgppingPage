@@ -30,8 +30,21 @@ body {
     display: inline-block;
     vertical-align: top;
     white-space: normal;
-    width: 33%;
+    width: 30%;
     font-size: 18px;
+}
+
+.prod_add,
+.cart_remove {
+    width: 10%;
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+}
+
+.prod_add img,
+.cart_remove img {
+    width: 100%;
 }
 
 .prod_element,
@@ -50,7 +63,7 @@ body {
     display: inline-block;
     vertical-align: top;
     white-space: normal;
-    width: 33%;
+    width: 29%;
     font-size: 18px;
 }
 

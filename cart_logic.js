@@ -7,6 +7,17 @@ function createNewDiv() {
 
 var data = [{ id: "1", name: "ACER 4521 4GB", count: "10", cost: "3000" }, { id: "2", name: "Asus 550 Pro", count: "2", cost: "2500" }, { id: "3", name: "HP Pavilion dv6", count: "50", cost: "3700" }, { id: "4", name: "PHILIPS FGt45", count: "1", cost: "1100" }];
 
+function ready() {
+    //добавление тестовой записи о товарах
+    addProd();
+
+    buttonCart = document.getElementById("submit_button");
+    //buttonCart.onclick = submitClick;
+    buttonCart.addEventListener('click', submitClick);
+}
+
+document.addEventListener("DOMContentLoaded", ready);
+
 //функция - adder для элемента в списке на складе
 var addProd = function() {
     //find node with id == product_table
@@ -18,7 +29,6 @@ var addProd = function() {
         var prodElemNode = storageNode.appendChild(div);
         prodElemNode.setAttribute("class", 'prod_element');
         prodElemNode.setAttribute("idd", element.id);
-        prodElemNode.onclick = addToCart;
 
         //prodElemNode = storageNode.lastChild;
 
@@ -34,6 +44,16 @@ var addProd = function() {
         var costNode = prodElemNode.appendChild(div);
         costNode.setAttribute("class", "prod_cost");
 
+
+        createNewDiv();
+        var addNode = prodElemNode.appendChild(div);
+        addNode.setAttribute("class", "prod_add");
+        addNode.addEventListener("click", addToCart);
+
+        image = document.createElement('img');
+        var imgNode = addNode.appendChild(image);
+        imgNode.setAttribute("src", "add.jpg");
+
         //set innerHTML for new subnodes
         nameNode.innerHTML = element.name;
         countNode.innerHTML = element.count;
@@ -43,12 +63,14 @@ var addProd = function() {
 }
 
 function addToCart() {
-    id_node = this.getAttribute("idd");
+    var parent1 = this.parentNode;
+    if (parent1 != undefined)
+        id_node = parent1.getAttribute("idd");
     //alert(id_node);
 
-    name_node = this.getElementsByClassName("prod_name")[0];
-    count_node = this.getElementsByClassName("prod_count")[0];
-    cost_node = this.getElementsByClassName("prod_cost")[0];
+    name_node = parent1.getElementsByClassName("prod_name")[0];
+    count_node = parent1.getElementsByClassName("prod_count")[0];
+    cost_node = parent1.getElementsByClassName("prod_cost")[0];
 
     var cartNode = document.getElementById("cart_table");
 
@@ -56,7 +78,7 @@ function addToCart() {
 
     //убрать товар из списка при кол-ве 1
     if (parseInt(count_node.innerHTML) == 1) {
-        this.remove();
+        parent1.remove();
     }
 
     //проверить существование узла с данным idd
@@ -83,7 +105,6 @@ function addToCart() {
         var cartElemNode = cartNode.appendChild(div);
         cartElemNode.setAttribute("class", 'cart_element');
         cartElemNode.setAttribute("idd", id_node);
-        cartElemNode.addEventListener("click", removeFromCart);
 
         createNewDiv();
         var nameNode = cartElemNode.appendChild(div);
@@ -103,17 +124,28 @@ function addToCart() {
         costNode.setAttribute("class", "cart_cost");
         costNode.innerHTML = cost_node.innerHTML;
 
+        createNewDiv();
+        var removeNode = cartElemNode.appendChild(div);
+        removeNode.setAttribute("class", "cart_remove");
+        removeNode.addEventListener("click", removeFromCart);
+
+        image = document.createElement('img');
+        var imgNode = removeNode.appendChild(image);
+        imgNode.setAttribute("src", "discard.jpg");
+
         idExists = false;
     }
 }
 
 function removeFromCart() {
-    id_node = this.getAttribute("idd");
+    var parent1 = this.parentNode;
+    if (parent1 != undefined)
+        id_node = parent1.getAttribute("idd");
     //alert(id_node);
 
-    name_node = this.getElementsByClassName("cart_name")[0];
-    count_node = this.getElementsByClassName("cart_count")[0];
-    cost_node = this.getElementsByClassName("cart_cost")[0];
+    name_node = parent1.getElementsByClassName("cart_name")[0];
+    count_node = parent1.getElementsByClassName("cart_count")[0];
+    cost_node = parent1.getElementsByClassName("cart_cost")[0];
 
     var prodNode = document.getElementById("product_table");
 
@@ -121,7 +153,7 @@ function removeFromCart() {
 
     //убрать товар из списка при кол-ве 1
     if (parseInt(count_node.innerHTML) == 1) {
-        this.remove();
+        parent1.remove();
     }
 
     //проверить существование узла с данным idd
@@ -148,7 +180,6 @@ function removeFromCart() {
         var prodElemNode = prodNode.appendChild(div);
         prodElemNode.setAttribute("class", 'prod_element');
         prodElemNode.setAttribute("idd", id_node);
-        prodElemNode.addEventListener("click", addToCart);
 
         createNewDiv();
         var nameNode = prodElemNode.appendChild(div);
@@ -167,6 +198,15 @@ function removeFromCart() {
         var costNode = prodElemNode.appendChild(div);
         costNode.setAttribute("class", "prod_cost");
         costNode.innerHTML = cost_node.innerHTML;
+
+        createNewDiv();
+        var addNode = prodElemNode.appendChild(div);
+        addNode.setAttribute("class", "prod_add");
+        addNode.addEventListener("click", addToCart);
+
+        image = document.createElement('img');
+        var imgNode = addNode.appendChild(image);
+        imgNode.setAttribute("src", "add.jpg");
 
         idExists = false;
     }
