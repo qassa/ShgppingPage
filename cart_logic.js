@@ -83,7 +83,7 @@ function addToCart() {
         var cartElemNode = cartNode.appendChild(div);
         cartElemNode.setAttribute("class", 'cart_element');
         cartElemNode.setAttribute("idd", id_node);
-        //cartElemNode.addEventListener("onclick", removeFromCart);
+        cartElemNode.addEventListener("click", removeFromCart);
 
         createNewDiv();
         var nameNode = cartElemNode.appendChild(div);
@@ -101,6 +101,71 @@ function addToCart() {
         createNewDiv();
         var costNode = cartElemNode.appendChild(div);
         costNode.setAttribute("class", "cart_cost");
+        costNode.innerHTML = cost_node.innerHTML;
+
+        idExists = false;
+    }
+}
+
+function removeFromCart() {
+    id_node = this.getAttribute("idd");
+    //alert(id_node);
+
+    name_node = this.getElementsByClassName("cart_name")[0];
+    count_node = this.getElementsByClassName("cart_count")[0];
+    cost_node = this.getElementsByClassName("cart_cost")[0];
+
+    var prodNode = document.getElementById("product_table");
+
+    var idExists = false;
+
+    //убрать товар из списка при кол-ве 1
+    if (parseInt(count_node.innerHTML) == 1) {
+        this.remove();
+    }
+
+    //проверить существование узла с данным idd
+    //cartNode.forEach(element => {
+    //});
+    Array.from(prodNode.children).forEach(function(element) {
+        if ((element.getAttribute("idd") !== undefined) && (element.getAttribute("idd") == id_node)) {
+            idExists = true;
+            //инкремент существующей записи
+            var record_count_node = element.getElementsByClassName("prod_count");
+            var value = parseInt(record_count_node[0].innerHTML);
+            value++;
+            record_count_node[0].innerHTML = value;
+
+            var number = parseInt(count_node.innerHTML);
+            number--;
+            count_node.innerHTML = number;
+        }
+    });
+
+    if (idExists == false) {
+        //создание нового узла в DOM-дереве
+        createNewDiv();
+        var prodElemNode = prodNode.appendChild(div);
+        prodElemNode.setAttribute("class", 'prod_element');
+        prodElemNode.setAttribute("idd", id_node);
+        prodElemNode.addEventListener("click", addToCart);
+
+        createNewDiv();
+        var nameNode = prodElemNode.appendChild(div);
+        nameNode.setAttribute("class", "prod_name");
+        nameNode.innerHTML = name_node.innerHTML;
+
+        createNewDiv();
+        var countNode = prodElemNode.appendChild(div);
+        countNode.setAttribute("class", "prod_count");
+        countNode.innerHTML = 1;
+        var number = parseInt(count_node.innerHTML);
+        number--;
+        count_node.innerHTML = number;
+
+        createNewDiv();
+        var costNode = prodElemNode.appendChild(div);
+        costNode.setAttribute("class", "prod_cost");
         costNode.innerHTML = cost_node.innerHTML;
 
         idExists = false;
